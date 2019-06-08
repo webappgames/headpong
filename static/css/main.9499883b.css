@@ -1,0 +1,2 @@
+.Camera{-webkit-transform:rotateY(180deg);transform:rotateY(180deg)}.Camera video{border:1px dotted red;z-index:10}.Camera canvas,.Camera video{position:absolute;top:0;left:0}.Camera canvas{border:1px dotted green;z-index:20}body{background:#000}
+/*# sourceMappingURL=main.9499883b.css.map*/
