@@ -1,6 +1,8 @@
 import { Vector2 } from '../Vector2';
 import { Engine } from '../Engine';
 
+//TODO: external vs internal options like freezed and active
+//TODO: sort options
 export interface IAbstractMeshOptions {
     label?: string;
     active: boolean;

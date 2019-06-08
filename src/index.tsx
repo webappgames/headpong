@@ -5,7 +5,7 @@ import * as posenet from '@tensorflow-models/posenet';
 import { waitTimeout, waitAnimationFrame } from './utils/wait';
 import { Engine } from './Game/Engine';
 import { Vector2 } from './Game/Vector2';
-import { Ball } from './Game/Mesh/Ball';
+import { Person, IPersonOptionsPartsName } from './Game/Mesh/Person';
 
 async function main() {
     ReactDOM.render(<App />, document.getElementById('root') as HTMLElement);
@@ -28,15 +28,7 @@ async function main() {
 
     engine.run();
 
-    const people: {
-        visible: boolean;
-        mesh: Ball;
-        /*parts: {
-        id: string,
-        //position: Vector2,
-        ball: Ball
-      }[]*/
-    }[] = [];
+    const people: Person[] = [];
     //let emiting = false;
 
     while (true) {
@@ -45,26 +37,28 @@ async function main() {
 
         //ball.options.label = pose.keypoints[0].part;
 
-        people.forEach((person) => (person.visible = false));
+        people.forEach((person) => (person.options.active = false));
         pose.forEach((personPose, i) => {
             if (!people[i]) {
-                people[i] = {
-                    visible: true,
-                    mesh: new Ball(engine, {
-                        label: null,
-                        color: 'red',
-                        size: 50,
-                        position: new Vector2({ x: 10, y: 10 }),
-                        movement: Vector2.Zero(),
-                        freezed: true,
-                    }),
-                };
+                people[i] = new Person(engine, {
+                    //nosePosition: Vector2;
+                    //eye1Position: Vector2;
+                    //eye2Position: Vector2;
+                    parts: [],
+                    active: true,
+                    freezed: true,
+                    position: new Vector2({ x: 10, y: 10 }),
+                    movement: Vector2.Zero(),
+                });
             }
             const person = people[i];
 
-            const position = new Vector2(personPose.keypoints[0].position);
-            person.visible = true;
-            person.mesh.options.position = position;
+            person.options.parts = personPose.keypoints.map((keypoint) => ({
+                name: keypoint.part as IPersonOptionsPartsName,
+                position: new Vector2(keypoint.position),
+            }));
+
+            person.options.active = true;
         });
 
         //const movement = position.subtract(ball.options.position);

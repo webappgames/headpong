@@ -1,5 +1,4 @@
 import { AbstractMesh, IAbstractMeshOptions } from './Mesh/AbstractMesh';
-import { Ball } from './Mesh/Ball';
 import { Vector2 } from './Vector2';
 
 interface IEngineOptions {
@@ -17,7 +16,7 @@ export class Engine {
         let timeLast: null | number = null;
 
         const updateLoop = (time: number) => {
-            for (const object of this.objects) {
+            for (const object of this.objects.filter((o) => o.options.active)) {
                 if (timeLast) {
                     object.update((time - timeLast) / 1000);
                 }
@@ -51,7 +50,7 @@ export class Engine {
         const renderLoop = () => {
             //console.log('renderLoop')
             ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            for (const object of this.objects) {
+            for (const object of this.objects.filter((o) => o.options.active)) {
                 object.render(ctx);
             }
 
