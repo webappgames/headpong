@@ -1,5 +1,8 @@
+import { imageLibrary, ImageLibrary } from './../../utils/ImageLibrary';
 import { AbstractMesh, IAbstractMeshOptions } from './AbstractMesh';
 import { Vector2 } from '../Vector2';
+
+imageLibrary.fromSrc('/assets/glasses.png');
 
 export type IPersonOptionsPartsName = 'leftEye' | 'rightEye' | 'nose';
 interface IPersonOptions extends IAbstractMeshOptions {
@@ -10,7 +13,7 @@ interface IPersonOptions extends IAbstractMeshOptions {
 }
 
 export class Person extends AbstractMesh<IPersonOptions> {
-    render(ctx: CanvasRenderingContext2D) {
+    async render(ctx: CanvasRenderingContext2D) {
         for (const part of this.options.parts) {
             ctx.beginPath();
             ctx.arc(part.position.x, part.position.y, 5, 0, Math.PI * 2, true);
@@ -19,6 +22,20 @@ export class Person extends AbstractMesh<IPersonOptions> {
             ctx.stroke();
             ctx.fill();
         }
+
+        const glassesImage = imageLibrary.fromSrcSync('/assets/glasses.png');
+        if (glassesImage) {
+            ImageLibrary.drawImage(
+                { resource: glassesImage, a: new Vector2({ x: 300, y: 138 }), b: new Vector2({ x: 1032, y: 138 }) },
+                {
+                    ctx,
+                    a: this.options.parts.find((p) => p.name == 'rightEye')!.position,
+                    b: this.options.parts.find((p) => p.name == 'leftEye')!.position,
+                },
+            );
+            //ctx.drawImage(glassesImage, 10, 10);
+        }
+
         super.render(ctx);
     }
 

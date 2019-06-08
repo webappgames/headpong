@@ -16,8 +16,20 @@ export class Vector2 {
         return new Vector2({ x: 0, y: 0 });
     }
 
-    static distance(vector2_1: Vector2, vector2_2: Vector2) {
+    static add(vector2_1: Vector2, vector2_2: Vector2): Vector2 {
+        return new Vector2({ x: vector2_1.x + vector2_2.x, y: vector2_1.y + vector2_2.y });
+    }
+
+    static subtract(vector2_1: Vector2, vector2_2: Vector2): Vector2 {
+        return new Vector2({ x: vector2_1.x - vector2_2.x, y: vector2_1.y - vector2_2.y });
+    }
+
+    static distance(vector2_1: Vector2, vector2_2: Vector2): number {
         return Math.sqrt(Math.pow(vector2_1.x - vector2_2.x, 2) + Math.pow(vector2_1.y - vector2_2.y, 2));
+    }
+
+    static rotation(vector2_1: Vector2, vector2_2: Vector2): number {
+        return Vector2.subtract(vector2_1, vector2_2).rotation;
     }
 
     clone() {
@@ -75,5 +87,21 @@ export class Vector2 {
 
     toLength(length: number) {
         return this.clone().toLengthInPlace(length);
+    }
+
+    get rotation() {
+        //todo optimize cache
+        return Math.atan2(this.y, this.x);
+    }
+
+    rotate(rotationAdd: number): Vector2 {
+        let { rotation, length } = this;
+
+        rotation += rotationAdd;
+
+        return new Vector2({
+            x: Math.cos(rotation) * length,
+            y: Math.sin(rotation) * length,
+        });
     }
 }

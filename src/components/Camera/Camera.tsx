@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as Webcam from 'react-webcam';
 import './Camera.css';
+import { waitAnimationFrame } from 'src/utils/wait';
 
 export class Camera extends React.Component<{}, {}> {
     //private webcam: any;
@@ -39,17 +40,22 @@ export class Camera extends React.Component<{}, {}> {
                     audio={false}
                     //width={640}
                     //height={480}
+
                     width={window.innerWidth}
                     height={window.innerHeight}
                     screenshotFormat="image/jpeg"
                 />
                 <canvas
-                    ref={(element) => {
+                    ref={async (element) => {
                         if (element) {
                             //this.drawCanvas = element;
 
-                            element.width = document.body.getBoundingClientRect().width;
-                            element.height = document.body.getBoundingClientRect().height;
+                            await waitAnimationFrame();
+
+                            const videoElement = document.querySelector('video')!;
+
+                            element.width = videoElement.width;
+                            element.height = videoElement.height;
                         }
                     }}
                 />
