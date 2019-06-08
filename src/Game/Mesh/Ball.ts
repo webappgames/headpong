@@ -1,19 +1,11 @@
-import { Vector2 } from './Vector2';
-import { Engine } from './Engine';
+import { AbstractMesh, IAbstractMeshOptions } from './AbstractMesh';
 
-interface IBallOptions {
-    label: string | null;
+interface IBallOptions extends IAbstractMeshOptions {
     color: string;
     size: number;
-    position: Vector2;
-    movement: Vector2;
 }
 
-export class Ball {
-    constructor(private engine: Engine, public options: IBallOptions) {
-        engine.addObject(this);
-    }
-
+export class Ball extends AbstractMesh<IBallOptions> {
     render(ctx: CanvasRenderingContext2D) {
         //console.log('render');
         ctx.beginPath();
@@ -34,12 +26,6 @@ export class Ball {
             ctx.fillStyle = 'white';
             ctx.fillText(this.options.label, this.options.position.x, this.options.position.y);
         }
-    }
-
-    update(delta: number) {
-        this.options.position.addInPlace(this.options.movement.scale(delta));
-        this.options.movement.addInPlace(this.engine.options.gravity.scale(delta));
-        this.options.movement.scaleInPlace(Math.pow(this.engine.options.friction, delta));
     }
 
     /*

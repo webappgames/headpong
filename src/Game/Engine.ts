@@ -1,4 +1,5 @@
-import { Ball } from './Ball';
+import { AbstractMesh, IAbstractMeshOptions } from './Mesh/AbstractMesh';
+import { Ball } from './Mesh/Ball';
 import { Vector2 } from './Vector2';
 
 interface IEngineOptions {
@@ -8,7 +9,7 @@ interface IEngineOptions {
 }
 
 export class Engine {
-    private objects: Ball[] = []; //todo abstract Object
+    private objects: AbstractMesh<IAbstractMeshOptions>[] = []; //todo abstract Object
 
     constructor(private canvas: HTMLCanvasElement, public options: IEngineOptions) {}
 
@@ -59,7 +60,7 @@ export class Engine {
         renderLoop();
     }
 
-    addObject(object: Ball) {
+    addObject(object: AbstractMesh<IAbstractMeshOptions>) {
         this.objects.push(object);
     }
 
