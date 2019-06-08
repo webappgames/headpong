@@ -56,7 +56,7 @@ async function main() {
                     //nosePosition: Vector2;
                     //eye1Position: Vector2;
                     //eye2Position: Vector2;
-                    glassesId: i % 2,
+                    glassesId: i % 4,
                     parts: [],
                     active: true,
                     freezed: true,

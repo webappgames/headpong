@@ -36,6 +36,10 @@ export class ImageLibrary {
             glassMeta = { a: new Vector2({ x: 300, y: 138 }), b: new Vector2({ x: 1032, y: 138 }) };
         } else if (glassId === 1) {
             glassMeta = { a: new Vector2({ x: 400, y: 370 }), b: new Vector2({ x: 1520, y: 370 }) };
+        } else if (glassId === 2) {
+            glassMeta = { a: new Vector2({ x: 100, y: 80 }), b: new Vector2({ x: 350, y: 80 }) };
+        } else if (glassId === 3) {
+            glassMeta = { a: new Vector2({ x: 220, y: 315 }), b: new Vector2({ x: 680, y: 315 }) };
         } else {
             throw new Error(`Wrong glass ID.`);
         }
