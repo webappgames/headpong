@@ -16,6 +16,8 @@ export class AbstractMesh<TOptions extends IAbstractMeshOptions> {
         engine.addObject(this);
     }
 
+    tick() {}
+
     render(ctx: CanvasRenderingContext2D) {
         ctx.beginPath();
         ctx.arc(this.options.position.x, this.options.position.y, 5, 0, Math.PI * 2, true);

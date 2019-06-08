@@ -17,6 +17,7 @@ export class Engine {
 
         const updateLoop = (time: number) => {
             for (const object of this.objects.filter((o) => o.options.active)) {
+                object.tick();
                 if (timeLast) {
                     object.update((time - timeLast) / 1000);
                 }

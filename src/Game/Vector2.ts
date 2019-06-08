@@ -16,8 +16,18 @@ export class Vector2 {
         return new Vector2({ x: 0, y: 0 });
     }
 
-    static add(vector2_1: Vector2, vector2_2: Vector2): Vector2 {
-        return new Vector2({ x: vector2_1.x + vector2_2.x, y: vector2_1.y + vector2_2.y });
+    static add(...vectors: Vector2[]): Vector2 {
+        if (!vectors.length) {
+            throw new Error(`In add thare should be at least one vector.`);
+        }
+
+        const sum = Vector2.Zero();
+
+        for (const vector of vectors) {
+            sum.addInPlace(vector);
+        }
+
+        return sum;
     }
 
     static subtract(vector2_1: Vector2, vector2_2: Vector2): Vector2 {
@@ -30,6 +40,10 @@ export class Vector2 {
 
     static rotation(vector2_1: Vector2, vector2_2: Vector2): number {
         return Vector2.subtract(vector2_1, vector2_2).rotation;
+    }
+
+    static center(...vectors: Vector2[]): Vector2 {
+        return Vector2.add(...vectors).scaleInPlace(1 / vectors.length);
     }
 
     clone() {

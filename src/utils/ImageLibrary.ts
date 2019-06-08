@@ -18,6 +18,31 @@ export class ImageLibrary {
         return this.images[src] || null;
     }
 
+    //TODO: Better
+    glassesWithMetaSync(glassId: number): { resource: HTMLImageElement; a: Vector2; b: Vector2 } | null {
+        const src = `/assets/glasses-${glassId}.png`;
+        //console.log(src);
+
+        const resource = this.images[src];
+
+        if (!resource) {
+            this.fromSrc(src);
+            return null;
+        }
+
+        let glassMeta: { a: Vector2; b: Vector2 };
+
+        if (glassId === 0) {
+            glassMeta = { a: new Vector2({ x: 300, y: 138 }), b: new Vector2({ x: 1032, y: 138 }) };
+        } else if (glassId === 1) {
+            glassMeta = { a: new Vector2({ x: 400, y: 370 }), b: new Vector2({ x: 1520, y: 370 }) };
+        } else {
+            throw new Error(`Wrong glass ID.`);
+        }
+
+        return { resource, ...glassMeta };
+    }
+
     static imageToContext(imageElement: HTMLImageElement): CanvasRenderingContext2D {
         const canvasElement = document.createElement('canvas');
         canvasElement.width = imageElement.width;
